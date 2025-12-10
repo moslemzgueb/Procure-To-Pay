@@ -58,6 +58,7 @@ async function importData() {
         console.log('Data import complete.');
     } catch (error) {
         console.error('Import failed:', error);
+        process.exit(1);
     } finally {
         await sequelize.close();
     }
