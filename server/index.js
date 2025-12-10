@@ -51,7 +51,7 @@ app.use('/api/tasks', taskRoutes);
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/dist')));
 
-    app.get('(.*)', (req, res) => {
+    app.use((req, res) => {
         // Don't interfere with API routes (though they are defined above, so this is safe)
         // If route hasn't been matched by API above, serve React app
         res.sendFile(path.resolve(__dirname, '../client/dist', 'index.html'));
