@@ -36,6 +36,11 @@ async function importData() {
                     }
                 });
 
+                // Fix Enum mismatch for ApprovalSteps
+                if (Model.name === 'ApprovalStep' && item.object_type === 'PAYMENTREQUEST') {
+                    item.object_type = 'PAYMENT';
+                }
+
                 const exists = await Model.findByPk(item.id);
                 if (!exists) {
                     await Model.create(item);
