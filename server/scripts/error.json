@@ -1,0 +1,7 @@
+{
+  "status": 500,
+  "data": {
+    "message": "Error approving",
+    "error": "Cannot read properties of null (reading 'entity_id')"
+  }
+}
