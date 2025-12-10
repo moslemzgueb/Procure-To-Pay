@@ -2,6 +2,7 @@ services:
   - type: web
     name: procure-to-pay-app
     env: node
+    plan: free
     buildCommand: npm install && npm run build
     startCommand: npm start
     envVars:
@@ -18,3 +19,4 @@ databases:
   - name: procure-to-pay-db
     databaseName: procure_to_pay
     user: procure_user
+    plan: free
