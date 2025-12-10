@@ -29,6 +29,13 @@ async function importData() {
             // bulkCreate is faster but can be tricky with some sqlite versions / auto-increment
             // For small datasets, loop is fine.
             for (const item of dataList) {
+                // Sanitize: Postgres rejects "" for integer columns. Convert "" to null for IDs.
+                Object.keys(item).forEach(key => {
+                    if (key.endsWith('_id') && item[key] === "") {
+                        item[key] = null;
+                    }
+                });
+
                 const exists = await Model.findByPk(item.id);
                 if (!exists) {
                     await Model.create(item);
