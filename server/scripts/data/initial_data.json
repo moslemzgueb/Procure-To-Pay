@@ -137,7 +137,7 @@
       "department": "",
       "level": "Level 1",
       "isActive": false,
-      "user_id": 5,
+      "user_id": null,
       "createdAt": "2025-12-03T12:21:07.642Z",
       "updatedAt": "2025-12-09T08:57:52.765Z"
     },
@@ -215,7 +215,7 @@
       "department": "",
       "level": "Level 1",
       "isActive": false,
-      "user_id": 7,
+      "user_id": null,
       "createdAt": "2025-12-09T08:36:08.002Z",
       "updatedAt": "2025-12-10T10:35:56.520Z"
     },
