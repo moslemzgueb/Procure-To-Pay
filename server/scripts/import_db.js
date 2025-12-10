@@ -67,6 +67,29 @@ async function importData() {
         await importModel(NotificationSettings, data.notificationSettings);
         await importModel(SystemSetting, data.systemSettings);
 
+        await importModel(SystemSetting, data.systemSettings);
+
+        // Reset Sequences (PostgreSQL only) to prevent ID collisions after hardcoded ID imports
+        const dialect = sequelize.getDialect();
+        if (dialect === 'postgres') {
+            console.log('Resetting Postgres sequences...');
+            const models = [
+                'Users', 'Entities', 'Vendors', 'Validators',
+                'ApprovalRules', 'ApprovalSteps', 'Budgets',
+                'PaymentRequests', 'Requisitions', 'PurchaseOrders',
+                'QAThreads', 'Attachments'
+            ];
+
+            for (const table of models) {
+                try {
+                    await sequelize.query(`SELECT setval(pg_get_serial_sequence('"${table}"', 'id'), COALESCE(MAX(id), 0) + 1, false) FROM "${table}";`);
+                } catch (error) {
+                    // Ignore error if table/sequence doesn't exist or doesn't have id
+                    console.log(`Skipped sequence reset for ${table}:`, error.message);
+                }
+            }
+        }
+
         console.log('Data import complete.');
     } catch (error) {
         console.error('Import failed:', error);
